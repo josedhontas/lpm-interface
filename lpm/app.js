@@ -27,22 +27,29 @@ if (!fs.existsSync(dataFilePath)) {
 
 // Rota para receber dados POST
 app.post('/api/receber-dados', (req, res) => {
-  // Dados recebidos no corpo da solicitação POST
-  const receivedData = req.body;
-
-  // Adicione os dados ao array
-  data.push(receivedData);
-
-  // Salve os dados no arquivo JSON
-  fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2), 'utf-8');
-
-  // Exibir os dados no console
-  console.log('Dados recebidos e armazenados:');
-  console.log(receivedData);
-
-  // Responder com uma mensagem de sucesso
-  res.json({ message: 'Dados recebidos e armazenados com sucesso' });
-});
+    // Dados recebidos no corpo da solicitação POST
+    const receivedData = req.body;
+  
+    // Aqui, você pode acessar os dados específicos que você deseja do objeto receivedData
+    const accelX1 = receivedData['Accel X1'];
+    const accelY1 = receivedData['Accel Y1'];
+    const accelZ1 = receivedData['Accel Z1'];
+  
+    // Faça o que desejar com os dados, como armazená-los ou processá-los
+  
+    // Salve os dados no arquivo JSON
+    data.push(receivedData);
+  
+    fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2), 'utf-8');
+  
+    // Exibir os dados no console
+    console.log('Dados recebidos e armazenados:');
+    console.log(receivedData);
+  
+    // Responder com uma mensagem de sucesso
+    res.json({ message: 'Dados recebidos e armazenados com sucesso' });
+  });
+  
 
 // Rota para obter todos os dados em formato JSON
 app.get('/api/dados', (req, res) => {
