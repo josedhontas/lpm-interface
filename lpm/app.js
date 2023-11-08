@@ -34,8 +34,10 @@ app.post('/api/receber-dados', (req, res) => {
   data.push(receivedData);
 
   if (data.length > 5) {
-      data = [];
-      fs.writeFileSync(dataFilePath, '[]', 'utf-8');
+      if (fs.existsSync(dataFilePath)) {
+          fs.unlinkSync(dataFilePath);
+      }
+      fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2), 'utf-8');
   } else {
       fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2), 'utf-8');
   }
@@ -45,6 +47,7 @@ app.post('/api/receber-dados', (req, res) => {
 
   res.json({ message: 'Dados recebidos e armazenados com sucesso' });
 });
+
 
   
 
